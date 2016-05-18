@@ -109,6 +109,16 @@ trait VersionableTrait
     }
 
     /**
+     * Get the version number
+     *
+     * @return int
+     */
+    public function getVersionNumber()
+    {
+        return (int)$this->currentVersion()->version_number;
+    }
+
+    /**
      * Get a model based on the version id
      *
      * @param $version_id
@@ -154,6 +164,10 @@ trait VersionableTrait
             $version                   = new Version();
             $version->versionable_id   = $this->getKey();
             $version->versionable_type = get_class($this);
+
+            if($this->versions->count() > 0)
+                $version->version_number   = $this->getVersionNumber() + 1;
+
             $version->user_id          = $this->getAuthUserId();
             $version->model_data       = serialize($this->getAttributes());
 

@@ -16,7 +16,8 @@ class CreateVersionsTable extends Migration {
 		{
 			$table->increments('version_id');
 			$table->integer('versionable_id');
-            $table->text('versionable_type');
+			$table->integer('version_number')->default(1);
+			$table->text('versionable_type');
 			$table->string('user_id', 150)->nullable();
 			$table->string('model_data', 'MAX');
 			$table->timestamps();
