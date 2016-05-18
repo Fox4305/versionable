@@ -68,6 +68,10 @@ class Version extends Eloquent
     public function revert()
     {
         $model = $this->getModel();
+
+        // to avoid SQL error on update (identity)
+        $model->syncOriginalAttribute($model->getKeyName());
+
         unset( $model->{$model->getCreatedAtColumn()} );
         unset( $model->{$model->getUpdatedAtColumn()} );
         if (method_exists($model, 'getDeletedAtColumn')) {
